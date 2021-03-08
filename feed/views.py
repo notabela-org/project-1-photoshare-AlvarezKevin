@@ -4,8 +4,9 @@ from django.contrib.auth.models import User
 from django.db.models import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from feed.models import Profile
+from feed.models import *
 from .forms import EditProfileForm
+from .forms import NewPostForm 
 
 # Create your views here.
 @login_required
@@ -23,12 +24,9 @@ def profile(request,username):
 
 @login_required
 def edit_profile(request):
-    print("Edit profile request")
     form = None
     if request.method == 'POST':
         form = EditProfileForm(data=request.POST,files=request.FILES)
-        print(form.errors)
-        print('Before form is valid')
         if form.is_valid():
             cleanForm = form.cleaned_data
             user = User.objects.get(username=request.user.get_username())
@@ -36,7 +34,6 @@ def edit_profile(request):
             user.save()
             profile = Profile(user=user,bio=cleanForm['bio'],image=cleanForm['image'])
             profile.save()
-            print("Updated values")
 
             return HttpResponseRedirect(reverse('index'))
         return render(request, 'feed/edit-profile.html',{'form':form})
@@ -48,3 +45,18 @@ def edit_profile(request):
     except ObjectDoesNotExist:
         form = EditProfileForm(data={'username':request.user.get_username()})
     return render(request, 'feed/edit-profile.html',{'form':form})
+
+@login_required
+def new_post(request):
+    form = NewPostForm(data={})
+    if request.method == 'POST':
+        form = NewPostForm(data=request.POST,files= request.FILES)
+        if form.is_valid():
+            cleanForm = form.cleaned_data
+            post = Post(user=request.user,image=cleanForm['image'],description=cleanForm['description'])
+            post.save()
+
+            return HttpResponseRedirect(reverse('index'))
+        return render(request,'feed/new-post.html',{'form':form})
+    return render(request, 'feed/new-post.html',{'form':form})
+

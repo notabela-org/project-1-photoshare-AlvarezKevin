@@ -12,7 +12,7 @@ The following **required** functionality is completed:
 - [X] User can log in and log out of her account
 - [X] Each user has a profile page that shows her username, profile photo, short bio and all their posts
 - [X] A Logged in user can edit her profile photo, her username and short bio (only hers but not others)
-- [ ] A Logged in User can create a new post by uploading a photo and adding a description
+- [X] A Logged in User can create a new post by uploading a photo and adding a description
 - [ ] A Logged in User can add a comment on a post
 - [ ] A Logged in User can view all the posts submitted on the platform, each posts shows the post's user's username and profile photo, when the post was created, the post's photo, the description and number of comments
 - [ ] Tapping on a post's user's username or profile photo goes to that user's profile page
@@ -46,7 +46,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [Year] [Name]
+    Copyright [2021] [Kevin]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
