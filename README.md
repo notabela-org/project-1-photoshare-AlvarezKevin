@@ -14,8 +14,8 @@ The following **required** functionality is completed:
 - [X] A Logged in user can edit her profile photo, her username and short bio (only hers but not others)
 - [X] A Logged in User can create a new post by uploading a photo and adding a description
 - [ ] A Logged in User can add a comment on a post
-- [ ] A Logged in User can view all the posts submitted on the platform, each posts shows the post's user's username and profile photo, when the post was created, the post's photo, the description and number of comments
-- [ ] Tapping on a post's user's username or profile photo goes to that user's profile page
+- [X] A Logged in User can view all the posts submitted on the platform, each posts shows the post's user's username and profile photo, when the post was created, the post's photo, the description and number of comments
+- [X] Tapping on a post's user's username or profile photo goes to that user's profile page
 - [ ] A Logged in user can view all the comments on a post, each comment shows the username and profile photo of the user who posted the comment and the date the comment was posted
 - [X] Anonymous users (unathenticated users) can only access the sign up and login pages
 
