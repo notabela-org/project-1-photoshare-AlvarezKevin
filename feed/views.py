@@ -2,7 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import ObjectDoesNotExist
+from django.http import HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
 from feed.models import Profile
+from .forms import EditProfileForm
 
 # Create your views here.
 @login_required
@@ -17,3 +20,31 @@ def profile(request,username):
     except ObjectDoesNotExist:
         profile = None
     return render(request, 'feed/profile.html', {'profile':profile,'username':user.get_username()})
+
+@login_required
+def edit_profile(request):
+    print("Edit profile request")
+    form = None
+    if request.method == 'POST':
+        form = EditProfileForm(data=request.POST,files=request.FILES)
+        print(form.errors)
+        print('Before form is valid')
+        if form.is_valid():
+            cleanForm = form.cleaned_data
+            user = User.objects.get(username=request.user.get_username())
+            user.username = cleanForm['username']
+            user.save()
+            profile = Profile(user=user,bio=cleanForm['bio'],image=cleanForm['image'])
+            profile.save()
+            print("Updated values")
+
+            return HttpResponseRedirect(reverse('index'))
+        return render(request, 'feed/edit-profile.html',{'form':form})
+
+    try:
+        user = User.objects.get(username=request.user.get_username())
+        profile = Profile.objects.get(user=user)
+        form = EditProfileForm(data={'username':user.get_username(),'bio':profile.get_bio(),'image':profile.get_image()})
+    except ObjectDoesNotExist:
+        form = EditProfileForm(data={'username':request.user.get_username()})
+    return render(request, 'feed/edit-profile.html',{'form':form})
